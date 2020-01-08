@@ -17,16 +17,18 @@ function findSteps(id) {
 
 async function add(scheme) {
     const [id] = await db("schemes").insert(scheme)
-    return await db("schemes").where({ id }).first()
+    return db("schemes").where({ id })
 }
 
 async function update(changes, id) {
     const [id] = await db("schemes").update(changes).where({ id })
+    return db("schemes").where({ id })
 }
 
 async function remove(id) {
+    const toDelete = await db("schemes").where({ id })
     await db("schemes").del().where({ id })
-    return await db("schemes").where("schemes.scheme_id", id).first()
+    return toDelete
 }
 
 module.exports = {
