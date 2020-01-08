@@ -15,23 +15,25 @@ function findSteps(id) {
         .where("s.id", id)
 }
 
-function addScheme(shceme) {
-
+async function add(scheme) {
+    const [id] = await db("schemes").insert(scheme)
+    return await db("schemes").where({ id }).first()
 }
 
-function update(changes, id) {
-
+async function update(changes, id) {
+    const [id] = await db("schemes").update(changes).where({ id })
 }
 
-function remove(id) {
-
+async function remove(id) {
+    await db("schemes").del().where({ id })
+    return await db("schemes").where("schemes.scheme_id", id).first()
 }
 
 module.exports = {
     find,
     findById,
     findSteps,
-    addScheme,
+    add,
     update,
     remove
 }
