@@ -21,7 +21,7 @@ async function add(scheme) {
 }
 
 async function update(changes, id) {
-    const [id] = await db("schemes").update(changes).where({ id })
+    await db("schemes").where({ id }).update(changes);
     return db("schemes").where({ id })
 }
 
